@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+
 public class App extends JPanel implements ActionListener, Constants {
     public App() {
         this.setPreferredSize(new Dimension(Constants.WIDTH * Constants.SIZE, Constants.HEIGHT * Constants.SIZE));
@@ -13,7 +14,7 @@ public class App extends JPanel implements ActionListener, Constants {
     }
     Timer timer;
     static List<Sand> grains;
-
+;
     public void start() {
         timer = new Timer(DELAY, this);
         timer.start();
@@ -34,6 +35,7 @@ public class App extends JPanel implements ActionListener, Constants {
         draw(g);
     }
     public void draw(Graphics g) {
+        g.setColor(Color.blue);
         for (Sand grain : grains) {
             grain.draw(g, grain.getX(), grain.getY());
         }

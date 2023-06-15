@@ -1,19 +1,18 @@
 import java.awt.*;
-import java.util.Random;
 
 public class Sand implements Constants {
     private int x;
     private int y;
-    private final Random random;
+    private Color color;
 
     public Sand(int x, int y) {
         this.x = x;
         this.y = y;
-        random = new Random();
+        this.color = colors[random.nextInt(colors.length)];
     }
 
     public void draw(Graphics g, int x, int y) {
-        g.setColor(Color.yellow);
+        g.setColor(color);
         g.fillRect(x, y, Constants.SIZE, Constants.SIZE);
     }
 
