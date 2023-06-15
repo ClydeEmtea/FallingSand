@@ -12,13 +12,21 @@ public class App extends JPanel implements ActionListener, Constants {
         start();
     }
     Timer timer;
-    List<Sand> grains;
+    static List<Sand> grains;
 
     public void start() {
         timer = new Timer(DELAY, this);
         timer.start();
         grains = new ArrayList<>();
     }
+
+    public void moveAll() {
+        for (Sand grain : grains) {
+            grain.move();
+        }
+    }
+
+    public static List<Sand> getGrains() {return grains;}
 
 
     public void paintComponent(Graphics g) {
@@ -27,17 +35,18 @@ public class App extends JPanel implements ActionListener, Constants {
     }
     public void draw(Graphics g) {
         for (Sand grain : grains) {
-            grain.draw(g);
+            grain.draw(g, grain.getX(), grain.getY());
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        moveAll();
         repaint();
 
     }
 
-    public class MyMouseListener implements MouseListener {
+    public class MyMouseListener implements MouseListener, MouseMotionListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {}
@@ -45,15 +54,27 @@ public class App extends JPanel implements ActionListener, Constants {
         @Override
         public void mousePressed(MouseEvent e) {
             grains.add(new Sand((e.getX() / Constants.SIZE) * Constants.SIZE, (e.getY() / Constants.SIZE) * Constants.SIZE));
+            App.this.addMouseMotionListener(this);
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+            App.this.removeMouseMotionListener(this);
+        }
 
         @Override
         public void mouseEntered(MouseEvent e) {}
 
         @Override
         public void mouseExited(MouseEvent e) {}
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            grains.add(new Sand((e.getX() / Constants.SIZE) * Constants.SIZE, (e.getY() / Constants.SIZE) * Constants.SIZE));
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {}
     }
+
 }
